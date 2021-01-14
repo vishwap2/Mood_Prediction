@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <h1 style="font-size: 40pt;">
+        Welcome to the Mood Prediction Algorithm!
+    </h1>
+    <head>
+      <script src="server.js">
+      </script>
+    </head>
+  <body style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 30pt; text-align: center;">
+    <div class="container">
+      <fieldset>
+        <form action="/" method="post">
+          <input name="city" type="text" placeholder="Enter a City" style="text-align: center;" required>
+          <button> Submit </button>
+        <% if(weather !== null){ %>
+          <p><%= weather %></p>
+        <% } %>
+        <% if(error !== null){ %>
+          <p><%= error %></p>
+        <% } %>
+        </form>
+          <input name="activity" type="text" placeholder="Enter an Activity" style="text-align: center;" id="activityinfo" required>
+            <button type="submit" onclick="onClick()">Submit</button>
+              <script>
+                function onClick() {
+                var act = document.getElementById("activityinfo").value;
+                var value = ml.classify(act);
+                var message = "";
+                if (value >= 3 && value < 6) {
+                  message = "Your mood is 😄";
+                }
+                else if (value > 0 && value < 3) {
+                  message = "Your mood is 😃";
+                }
+                else if (value == 0) {
+                  message = "Your mood is 😐";
+                }
+                else if (value > -2 && value < 0) {
+                  message = "Your mood is 😑";
+                }
+                else {
+                message = "Your mood is 😢";
+                }
+                document.getElementById("mood").innerHTML = message;
+              }
+            </script>
+        <p id="mood"></p>
+      </fieldset>
+    </div>
+  </body>
+</html>
